@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
 import 'package:untitledtest/models/UserLog.dart';
 
 import '../ComponentWidgth.dart';
@@ -24,5 +25,9 @@ class LoginViewModel extends ChangeNotifier {
       BuildContext context, String email, String password) async {
     DialogBox(context,"Error");
     // await
+  }
+
+  googleSignIn(){
+
   }
 }

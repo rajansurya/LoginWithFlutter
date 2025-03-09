@@ -31,11 +31,11 @@ class EmailandLoginField extends HookConsumerWidget {
                       borderRadius: BorderRadius.circular(10)),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12)),
-                  prefixIcon: Icon(Icons.email),
+                  prefixIcon: const Icon(Icons.email),
                   hintText: "Email"),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           SizedBox(
@@ -57,8 +57,8 @@ class EmailandLoginField extends HookConsumerWidget {
               obscureText: viewModelProder.isObscure,
             ),
           ),
-          SizedBox(height: 30,),
-          RegisterLoginButton()
+          const SizedBox(height: 30,),
+          const RegisterLoginButton()
         ],
       ),
     );
@@ -66,6 +66,8 @@ class EmailandLoginField extends HookConsumerWidget {
 }
 
 class RegisterLoginButton extends HookConsumerWidget {
+  const RegisterLoginButton({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModelProvider = ref.watch(loginViewModelProvider);

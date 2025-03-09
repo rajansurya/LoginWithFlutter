@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:untitledtest/NetworkCallDio.dart';
 
 import 'EmailandLogin.dart';
 
@@ -29,6 +30,7 @@ class LoginHandler extends HookConsumerWidget {
             ),
             SizedBox(height: 30,),
             EmailandLoginField(),
+            Networkcalldio(),
           ],
         ),
       ),
