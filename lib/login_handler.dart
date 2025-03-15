@@ -15,23 +15,27 @@ class LoginHandler extends HookConsumerWidget {
     return SafeArea(
         child: Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: deviceHeight / 5.5,
-              child: Center(
-                child: Image.asset(
-                  "assets/myphoto.jpg",
+        child: Container(
+          alignment: Alignment.center,
+          height:deviceHeight ,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: deviceHeight / 5.5,
+                child: Center(
+                  child: Image.asset(
+                    "assets/ic_login.png",
+                  ),
                 ),
-              ),
 
-            ),
-            SizedBox(height: 30,),
-            EmailandLoginField(),
-            Networkcalldio(),
-          ],
+              ),
+              const SizedBox(height: 30,),
+              const EmailandLoginField(),
+               NetworkCallDio(),
+            ],
+          ),
         ),
       ),
     ));
