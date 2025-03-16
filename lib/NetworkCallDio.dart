@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:untitledtest/HomePage.dart';
+import 'package:untitledtest/services/providers.dart';
 
 class NetworkCallDio extends HookConsumerWidget {
   NetworkCallDio({super.key});
@@ -28,9 +30,16 @@ class NetworkCallDio extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // final postData = ref.watch(postsProvider);
     return MaterialButton(
       onPressed: () {
-        getData();
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
+       /* postData.when(
+            data: (post) {
+              logger.e(post);
+            },
+            error: (obj, error) {},
+            loading: () {});*/
       },
       color: Colors.amber,
       child: const Text("Post Data"),

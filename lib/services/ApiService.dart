@@ -7,8 +7,8 @@ class ApiService {
   ApiService(this._dio) {
     _dio.options = BaseOptions(
         baseUrl: "https://jsonplaceholder.typicode.com",
-        connectTimeout: Duration(seconds: 10),
-        receiveTimeout: Duration(seconds: 20));
+        connectTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 20));
     _dio.interceptors.addAll([
       AuthInterceptor(),
     ]
