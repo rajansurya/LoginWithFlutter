@@ -34,7 +34,7 @@ class Networkcalldio extends HookConsumerWidget {
     return MaterialButton(
       onPressed: () {
         postData();
-      },object
+      },
       child: Text("Click Me"),
       color: Colors.amber,
     );
