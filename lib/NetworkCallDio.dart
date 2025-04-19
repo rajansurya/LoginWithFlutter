@@ -1,17 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:untitledtest/HomePage.dart';
+import 'package:untitledtest/services/providers.dart';
 
-class Networkcalldio extends HookConsumerWidget {
-  const Networkcalldio({super.key});
+class NetworkCallDio extends HookConsumerWidget {
+  NetworkCallDio({super.key});
 
-  /*@override
-  State<Networkcalldio> createState() => _NetworkcalldioState();*/
+  final Logger logger = Logger();
 
   Future<void> getData() async {
-    Logger logger = Logger();
     await Dio().get("https://jsonplaceholder.typicode.com/posts").then((value) {
       logger.d(value);
     });
@@ -20,30 +19,30 @@ class Networkcalldio extends HookConsumerWidget {
   Future<void> postData() async {
     await Dio()
         .post("https://jsonplaceholder.typicode.com/posts",
-            queryParameters: {"title": "foo", "body": "bar", "userId": 1},
+            queryParameters: {"title": "foo", "body": "bar", "userId": 2},
             options: Options(headers: <String, String>{
               'Content-Type': 'application/json; charset=utf-8'
             }))
         .then((value) {
-      print(value);
+      logger.d(value);
     });
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // final postData = ref.watch(postsProvider);
     return MaterialButton(
       onPressed: () {
-        postData();
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
+       /* postData.when(
+            data: (post) {
+              logger.e(post);
+            },
+            error: (obj, error) {},
+            loading: () {});*/
       },
-      child: Text("Click Me"),
       color: Colors.amber,
+      child: const Text("Post Data"),
     );
-  }
-}
-
-class _NetworkcalldioState extends State<Networkcalldio> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
