@@ -18,12 +18,11 @@ class HomePage extends HookConsumerWidget{
                  subtitle: Text(posts[index]["body"]),
                );
            },
-         )
-
-         , error: (obj,erro){
+         ),
+         error: (obj,erro){
 
      }, loading: (){
- CircularProgressIndicator();
+          CircularProgressIndicator();
      }) ,
    );
   }

@@ -39,6 +39,7 @@ dependencies:
   hooks_riverpod: ^2.6.1
   dio: ^5.8.0+1
   logger: ^2.5.0
+  transparent_image: ^2.0.1
 
 dev_dependencies:
   flutter_test:

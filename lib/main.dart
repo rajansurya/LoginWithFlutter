@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitledtest/screens/CateroriesScreen.dart';
+import 'package:untitledtest/screens/tabs.dart';
 
 import 'Tile.dart';
 import 'login_handler.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const CategoriesScreen()//const LoginHandler(),//const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const TabScreen()//const LoginHandler(),//const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
