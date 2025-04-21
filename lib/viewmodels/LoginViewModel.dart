@@ -6,11 +6,10 @@ import 'package:untitledtest/models/UserLog.dart';
 import '../ComponentWidgth.dart';
 
 final loginViewModelProvider =
-    ChangeNotifierProvider.autoDispose<LoginViewModel>(
-        (ref) => LoginViewModel());
+    ChangeNotifierProvider.autoDispose<LoginViewModel>((ref) => LoginViewModel());
+
 final authStateProvider = StreamProvider<UserLog?>((ref) {
-  return ref
-      .read(loginViewModelProvider as ProviderListenable<Stream<UserLog?>>);
+  return ref.read(loginViewModelProvider as ProviderListenable<Stream<UserLog?>>);
 });
 
 class LoginViewModel extends ChangeNotifier {
@@ -21,8 +20,7 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createEmailPassword(
-      BuildContext context, String email, String password) async {
+  Future<void> createEmailPassword(BuildContext context, String email, String password) async {
     DialogBox(context,"Error");
     // await
   }

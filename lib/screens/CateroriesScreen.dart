@@ -7,8 +7,8 @@ import '../data/dummy_data.dart';
 import '../models/meal.dart';
 
 class CategoriesScreen extends StatelessWidget {
-   CategoriesScreen({required this.onFavSelected});
-  void Function(Meal) onFavSelected;
+   CategoriesScreen();
+  // void Function(Meal) onFavSelected;
   void _selectCategory(BuildContext context, Category category) {
     final filterList = dummyMeals
         .where((item) => item.categories.contains(category.id))
@@ -18,7 +18,6 @@ class CategoriesScreen extends StatelessWidget {
       return MealsScreen(
         title: category.title,
         meal: filterList,
-        onFavSelected: onFavSelected,
       );
     }));
   }

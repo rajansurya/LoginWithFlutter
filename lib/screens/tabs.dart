@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitledtest/providers/favorites_provider.dart';
+import 'package:untitledtest/providers/meals_provider.dart';
 import 'package:untitledtest/screens/CateroriesScreen.dart';
 import 'package:untitledtest/screens/FiltersScreen.dart';
 import 'package:untitledtest/screens/Meals.dart';
@@ -7,18 +10,18 @@ import 'package:untitledtest/widgets/Main_Drawer.dart';
 
 import '../models/meal.dart';
 
-class TabScreen extends StatefulWidget {
+class TabScreen extends ConsumerStatefulWidget {
   const TabScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<TabScreen> createState() {
     return _TabsScreenState();
   }
 }
 
-class _TabsScreenState extends State<TabScreen> {
+class _TabsScreenState extends ConsumerState<TabScreen> {
   int selectedTab = 0;
-  final List<Meal> _favMeal = [];
+  // final List<Meal> _favMeal = [];
 
   void _setScreen(String indentfier) async {
     if (indentfier == "filter") {
@@ -37,7 +40,7 @@ class _TabsScreenState extends State<TabScreen> {
     });
   }
 
-  void _toggleMealFav(Meal meal) {
+  /*void _toggleMealFav(Meal meal) {
     final isExist = _favMeal.contains(meal);
     if (isExist) {
       setState(() {
@@ -48,22 +51,22 @@ class _TabsScreenState extends State<TabScreen> {
         _favMeal.add(meal);
       });
     }
-  }
+  }*/
+
 
   @override
   Widget build(BuildContext context) {
-    Widget activePage = CategoriesScreen(
-      onFavSelected: (meal) {
-        _toggleMealFav(meal);
-      },
-    );
+  final meals= ref.watch(mealsProvider);
+  final availableMeals=meals.where((meal){
+     return true;
+  });
+    Widget activePage = CategoriesScreen();
     if (selectedTab == 1) {
+      final favoritesMeals= ref.watch(favoritesMealProvider);
+
       activePage = MealsScreen(
         title: "Fabv",
-        meal: _favMeal,
-        onFavSelected: (meal) {
-          _toggleMealFav(meal);
-        },
+        meal: favoritesMeals,
       );
     }
 

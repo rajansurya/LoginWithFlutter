@@ -13,15 +13,15 @@ class MealsScreen extends StatelessWidget {
       {super.key,
       required this.title,
       required this.meal,
-      required this.onFavSelected});
+      /*required this.onFavSelected*/});
 
-  void Function(Meal) onFavSelected;
+  // void Function(Meal) onFavSelected;
 
   void selectMeal(Meal meal, BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (ctx) => MealDetail(
               meal: meal,
-              onFavSelected: onFavSelected,
+
             )));
   }
 

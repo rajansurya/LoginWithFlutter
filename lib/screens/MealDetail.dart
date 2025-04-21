@@ -1,21 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitledtest/models/meal.dart';
+import 'package:untitledtest/providers/favorites_provider.dart';
 
-class MealDetail extends StatelessWidget{
+class MealDetail extends ConsumerWidget{
   final Meal meal;
 
-   MealDetail({super.key, required this.meal, required this.onFavSelected});
- void Function(Meal) onFavSelected;
+   MealDetail({super.key, required this.meal,});
+ // void Function(Meal) onFavSelected;
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
         actions: [IconButton(onPressed: (){
-          onFavSelected(meal);
+       final isAddedFav=  ref.watch(favoritesMealProvider.notifier).toggleMealFavorites(meal);
+
+         ScaffoldMessenger.of(context).clearSnackBars();
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(isAddedFav ? 'Meal added':'Meal removed')));
+          
         }, icon: Icon(Icons.favorite))],
       ),
 
