@@ -9,7 +9,15 @@ import 'package:untitledtest/screens/Meals.dart';
 import 'package:untitledtest/widgets/Main_Drawer.dart';
 
 import '../models/meal.dart';
+import '../providers/filters_provider.dart';
 
+
+const kInitialFilters={
+  Filters.glutenFree:false,
+  Filters.lactoseFree:false,
+  Filters.vegetarian:false,
+  Filters.vegan:false
+};
 class TabScreen extends ConsumerStatefulWidget {
   const TabScreen({super.key});
 

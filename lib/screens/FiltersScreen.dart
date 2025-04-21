@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-enum Filters { gluteFree, lactoseFree }
+import 'package:untitledtest/providers/filters_provider.dart';
 
 class FiltersScreen extends StatefulWidget {
   FiltersScreen({super.key});
@@ -13,7 +12,10 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FiltersScreen> {
-  var glutenFreeSet = false;
+  var glutenFree = false;
+  var lactoseFree = false;
+  var vegetarian = false;
+  var vegan = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +24,52 @@ class _FilterScreenState extends State<FiltersScreen> {
         title: Text('Your Filters'),
       ),
       body: PopScope(
-        onPopInvokedWithResult: (didPop, result) async{
-          Navigator.of(context).pop({Filters.gluteFree: glutenFreeSet});
+        onPopInvokedWithResult: (didPop, result) async {
+          Navigator.of(context).pop({
+            Filters.glutenFree: glutenFree,
+            Filters.lactoseFree: lactoseFree,
+            Filters.vegetarian: vegetarian,
+            Filters.vegan: vegan
+          });
         },
         child: Column(
           children: [
             SwitchListTile(
-              value: glutenFreeSet,
+              value: glutenFree,
               onChanged: (isChecked) {
                 setState(() {
-                  glutenFreeSet = isChecked;
+                  glutenFree = isChecked;
                 });
               },
-              title: Text(' "Gluten free"'),
+              title: Text('glutenFree free'),
             ),
+            SwitchListTile(
+              value: vegan,
+              onChanged: (isChecked) {
+                setState(() {
+                  vegan = isChecked;
+                });
+              },
+              title: Text('vegan'),
+            ),
+            SwitchListTile(
+              value: vegetarian,
+              onChanged: (isChecked) {
+                setState(() {
+                  vegetarian = isChecked;
+                });
+              },
+              title: Text('vegetarian'),
+            ),
+            SwitchListTile(
+              value: lactoseFree,
+              onChanged: (isChecked) {
+                setState(() {
+                  lactoseFree = isChecked;
+                });
+              },
+              title: Text('lactoseFree'),
+            )
           ],
         ),
       ),
