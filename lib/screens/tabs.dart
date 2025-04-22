@@ -33,10 +33,13 @@ class _TabsScreenState extends ConsumerState<TabScreen> {
 
   void _setScreen(String indentfier) async {
     if (indentfier == "filter") {
+
       Navigator.of(context).pop();
+
       final result = await Navigator.of(context).push<Map<Filters, bool>>(
           MaterialPageRoute(builder: (ctx) => FiltersScreen()));
-      print('=============== $result');
+      print('Get popResult =============== $result');
+
     } else {
       Navigator.of(context).pop();
     }
@@ -65,10 +68,25 @@ class _TabsScreenState extends ConsumerState<TabScreen> {
   @override
   Widget build(BuildContext context) {
   final meals= ref.watch(mealsProvider);
+  final activeFilters=ref.watch(filterProvider);
+
+
   final availableMeals=meals.where((meal){
+    if(activeFilters[Filters.lactoseFree]! && !meal.isLactoseFree){
+      return false;
+    }
+    if(activeFilters[Filters.vegetarian]! && !meal.isVegetarian){
+      return false;
+    }
+    if(activeFilters[Filters.glutenFree]! && !meal.isGlutenFree){
+      return false;
+    }
+    if(activeFilters[Filters.vegan]! && !meal.isVegan){
+      return false;
+    }
      return true;
-  });
-    Widget activePage = CategoriesScreen();
+  }).toList();
+    Widget activePage = CategoriesScreen(availableMeals:availableMeals,);
     if (selectedTab == 1) {
       final favoritesMeals= ref.watch(favoritesMealProvider);
 

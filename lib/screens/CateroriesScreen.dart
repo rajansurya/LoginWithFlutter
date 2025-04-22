@@ -7,17 +7,18 @@ import '../data/dummy_data.dart';
 import '../models/meal.dart';
 
 class CategoriesScreen extends StatelessWidget {
-   CategoriesScreen();
+   CategoriesScreen({required this.availableMeals});
+  final List<Meal> availableMeals;
   // void Function(Meal) onFavSelected;
   void _selectCategory(BuildContext context, Category category) {
-    final filterList = dummyMeals
+    /*final filterList = dummyMeals
         .where((item) => item.categories.contains(category.id))
-        .toList();
+        .toList();*/
 
     Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
       return MealsScreen(
         title: category.title,
-        meal: filterList,
+        meal: availableMeals/*filterList*/,
       );
     }));
   }

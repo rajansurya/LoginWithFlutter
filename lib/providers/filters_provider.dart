@@ -17,6 +17,9 @@ class FilterProvider extends StateNotifier<Map<Filters,bool>>{
     Filters.vegan:false
   });
 
+  void setFilters(Map<Filters,bool> chosenFilters ){
+     state=chosenFilters;
+  }
   void setFilter(Filters filter,bool isActive){
     state ={...state,filter:isActive};
 
