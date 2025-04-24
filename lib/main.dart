@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitledtest/screens/CateroriesScreen.dart';
 import 'package:untitledtest/screens/tabs.dart';
+import 'package:untitledtest/widgets/grocery_list.dart';
 
 import 'Tile.dart';
 import 'login_handler.dart';
@@ -21,7 +22,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Groceries',
       theme: ThemeData.dark().copyWith(
-        useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 147, 229, 250),
           brightness: Brightness.dark,
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: const Color.fromARGB(255, 50, 58, 60),
       ),
-      home: ListView(),
+      home: const GroceryList(),
     );
   }
 }
