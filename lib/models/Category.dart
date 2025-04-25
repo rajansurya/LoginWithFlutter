@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 class Category{
-  final String id;
+  final String title;
   final Color color;
 
-   Category( this.id,  this.color);
+   Category( this.title,  this.color);
 }
 
 enum Categories{
