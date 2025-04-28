@@ -18,6 +18,7 @@ class GroceryList extends StatefulWidget {
 class _GroceryListState extends State<GroceryList> {
   List<GroceryItem> _groceryItems = [];
   var _isLoading = true;
+  String? _error = null;
 
   void _loadData() async {
     final url = Uri.https(domain, 'shopping-list.json');
@@ -25,7 +26,11 @@ class _GroceryListState extends State<GroceryList> {
     final response = await http.get(url);
     try {
       final List<GroceryItem> _groceryItemsLoc = [];
-
+      if (response.statusCode >= 400) {
+        setState(() {
+          _error = 'Failed to load data, try after some time!';
+        });
+      }
       final Map<String, dynamic> responseData = json.decode(response.body);
       for (final item in responseData.entries) {
         final category = categories.entries
@@ -67,10 +72,19 @@ class _GroceryListState extends State<GroceryList> {
     _loadData();
   }
 
-  void _removeItem(int item) {
+  void _removeItem(GroceryItem item) async {
+    final index = _groceryItems.indexOf(item);
     setState(() {
-      _groceryItems.removeAt(item);
+      _groceryItems.remove(item);
     });
+    final url = Uri.https(domain, 'shopping-list/${item.id}.json');
+
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
+      setState(() {
+        _groceryItems.insert(index, item);
+      });
+    }
   }
 
   @override
@@ -89,7 +103,7 @@ class _GroceryListState extends State<GroceryList> {
           itemBuilder: (ctx, index) => Dismissible(
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
-                  _removeItem(index);
+                  _removeItem(_groceryItems[index]);
                 },
                 key: ValueKey(_groceryItems[index].id),
                 child: ListTile(
@@ -106,6 +120,11 @@ class _GroceryListState extends State<GroceryList> {
                   trailing: Text(_groceryItems[index].quantity.toString()),
                 ),
               ));
+    }
+    if (_error != null) {
+      content = Center(
+        child: Text(_error!),
+      );
     }
     return Scaffold(
       appBar: AppBar(
