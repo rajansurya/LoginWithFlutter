@@ -17,19 +17,25 @@ class GroceryList extends StatefulWidget {
 
 class _GroceryListState extends State<GroceryList> {
   List<GroceryItem> _groceryItems = [];
-  var _isLoading = true;
-  String? _error = null;
-
-  void _loadData() async {
+  //var _isLoading = true;
+  // String? _error = null;
+late Future<List<GroceryItem>> _loadedItems;
+  Future<List<GroceryItem>> _loadData() async {
     final url = Uri.https(domain, 'shopping-list.json');
-
-    final response = await http.get(url);
     try {
+      final response = await http.get(url);
       final List<GroceryItem> _groceryItemsLoc = [];
       if (response.statusCode >= 400) {
-        setState(() {
+       /* setState(() {
           _error = 'Failed to load data, try after some time!';
-        });
+        });*/
+        throw Exception('Something went wrong, please try after some time');
+      }
+      if(response.body == 'null'){
+        /*setState(() {
+          _isLoading=false;
+        });*/
+        return[];
       }
       final Map<String, dynamic> responseData = json.decode(response.body);
       for (final item in responseData.entries) {
@@ -45,12 +51,16 @@ class _GroceryListState extends State<GroceryList> {
         _groceryItemsLoc.add(data);
       }
 
-      setState(() {
+     /* setState(() {
         _groceryItems = _groceryItemsLoc;
         _isLoading = false;
-      });
+      });*/
+      return _groceryItemsLoc;
     } catch (exception) {
-      print("$exception");
+      throw Exception('Something went wrong, please try after some time');
+     /* setState(() {
+        _error = 'Some thing went wrong, try after some time!';
+      });*/
     }
   }
 
@@ -69,7 +79,7 @@ class _GroceryListState extends State<GroceryList> {
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _loadedItems= _loadData();
   }
 
   void _removeItem(GroceryItem item) async {
@@ -89,49 +99,60 @@ class _GroceryListState extends State<GroceryList> {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = const Center(
-      child: Text('No item found'),
-    );
-    if (_isLoading) {
+  //  Widget content =
+   /* if (_isLoading) {
       content = const Center(
         child: CircularProgressIndicator(),
       );
-    }
-    if (_groceryItems.isNotEmpty) {
-      content = ListView.builder(
-          itemCount: _groceryItems.length,
-          itemBuilder: (ctx, index) => Dismissible(
-                direction: DismissDirection.endToStart,
-                onDismissed: (direction) {
-                  _removeItem(_groceryItems[index]);
-                },
-                key: ValueKey(_groceryItems[index].id),
-                child: ListTile(
-                  title: Text(
-                    _groceryItems[index].name,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.amber /*Theme.of(context).primaryColor*/
-                        ),
-                  ),
-                  leading: Container(
-                      width: 20,
-                      height: 20,
-                      color: _groceryItems[index].category.color),
-                  trailing: Text(_groceryItems[index].quantity.toString()),
-                ),
-              ));
-    }
-    if (_error != null) {
+    }*/
+
+   /* if (_error != null) {
       content = Center(
         child: Text(_error!),
       );
-    }
+    }*/
     return Scaffold(
       appBar: AppBar(
         title: Text('Grocery List'),
         actions: [IconButton(onPressed: _addItem, icon: Icon(Icons.add))],
       ),
-      body: content,
+      body: FutureBuilder(future: _loadedItems, builder: (context,snapshot){
+        if(snapshot.connectionState == ConnectionState.waiting){
+         return Center(child: const CircularProgressIndicator());
+        }
+        if(snapshot.hasError){
+          return Text(snapshot.error.toString());
+        }
+        if(snapshot.data!.isEmpty){
+return const Center(
+  child: Text('No item found'),
+);
+        }
+        return
+          ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (ctx, index) => Dismissible(
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) {
+                  _removeItem(snapshot.data![index]);
+                },
+                key: ValueKey(snapshot.data![index].id),
+                child: ListTile(
+                  title: Text(
+                    snapshot.data![index].name,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Colors.amber /*Theme.of(context).primaryColor*/
+                    ),
+                  ),
+                  leading: Container(
+                      width: 20,
+                      height: 20,
+                      color: snapshot.data![index].category.color),
+                  trailing: Text(snapshot.data![index].quantity.toString()),
+                ),
+              ));
+
+      }),
     );
   }
 }
